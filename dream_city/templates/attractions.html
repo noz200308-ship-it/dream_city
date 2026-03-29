@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ city.city_name }} — Достопримечательности</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">{{ city.city_name }}</div>
+            <ul class="nav-menu">
+                <li><a href="/">Главная</a></li>
+                <li><a href="/attractions" class="active">Достопримечательности</a></li>
+                <li><a href="/gallery">Галерея</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Достопримечательности {{ city.city_name }}</h1>
+            <p>Исследуйте самые красивые места города моей мечты</p>
+        </div>
+    </section>
+
+    <!-- Список достопримечательностей -->
+    <section class="section attractions-page">
+        <div class="container">
+            <div class="attractions-list">
+                {% for attraction in city.attractions %}
+                <div class="attraction-item">
+                    <div class="attraction-image-large">
+                        <img src="{{ url_for('static', filename='img/' + attraction.image) }}" alt="{{ attraction.name }}">
+                    </div>
+                    <div class="attraction-details-large">
+                        <h2>{{ attraction.name }}</h2>
+                        <p class="attraction-description">{{ attraction.description }}</p>
+                        
+                        <div class="attraction-info-grid">
+                            {% if attraction.price %}
+                            <div class="info-item">
+                                <span class="info-icon">💰</span>
+                                <div>
+                                    <strong>Цена</strong>
+                                    <p>{{ attraction.price }}</p>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            {% if attraction.duration %}
+                            <div class="info-item">
+                                <span class="info-icon">⏱️</span>
+                                <div>
+                                    <strong>Длительность</strong>
+                                    <p>{{ attraction.duration }}</p>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            {% if attraction.address %}
+                            <div class="info-item">
+                                <span class="info-icon">📍</span>
+                                <div>
+                                    <strong>Адрес</strong>
+                                    <p>{{ attraction.address }}</p>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            {% if attraction.working_hours %}
+                            <div class="info-item">
+                                <span class="info-icon">🕐</span>
+                                <div>
+                                    <strong>Часы работы</strong>
+                                    <p>{{ attraction.working_hours }}</p>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <a href="/gallery" class="btn-small">Смотреть фото</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Карта (можно добавить позже) -->
+    <section class="section map-section">
+        <div class="container">
+            <h2 class="section-title">Карта достопримечательностей</h2>
+            <div class="map-placeholder">
+                <p>🗺️ Интерактивная карта появится здесь</p>
+                <small>Все достопримечательности отмечены на карте города</small>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <p>{{ city.city_name }} — Город моей мечты</p>
+            <p class="footer-credit">Создано с ❤️ для проекта "Город мечты"</p>
+        </div>
+    </footer>
+</body>
+</html>

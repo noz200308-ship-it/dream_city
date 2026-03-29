@@ -3,19 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ city.city_name }} — Город моей мечты</title>
+    <title>{{ city.city_name }} — Город моей мечты | Главная</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- 🔧 ЧТО ИЗМЕНИТЬ:
-    - Замените текст в секциях на свои идеи
-    - Добавьте/удалите секции по необходимости
-    - Измените цвета в CSS под свою тему
-    - Можете добавить JavaScript для интерактивности
-    -->
-    
-    <!-- Герой-секция (главный баннер) -->
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">{{ city.city_name }}</div>
+            <ul class="nav-menu">
+                <li><a href="/" class="active">Главная</a></li>
+                <li><a href="/attractions">Достопримечательности</a></li>
+                <li><a href="/gallery">Галерея</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Герой-секция -->
     <header class="hero">
         <div class="hero-overlay"></div>
         <div class="hero-content">
@@ -24,20 +29,6 @@
             <a href="#about" class="btn-primary">Узнать больше</a>
         </div>
     </header>
-
-    <!-- Навигация -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">{{ city.city_name }}</div>
-            <ul class="nav-menu">
-                <li><a href="#about">О городе</a></li>
-                <li><a href="#attractions">Достопримечательности</a></li>
-                <li><a href="#features">Особенности</a></li>
-                <li><a href="#gallery">Галерея</a></li>
-                <li><a href="#tips">Советы</a></li>
-            </ul>
-        </div>
-    </nav>
 
     <!-- Секция "О городе" -->
     <section id="about" class="section about-section">
@@ -62,7 +53,6 @@
                         </div>
                     </div>
                     
-                    {% if city.country %}
                     <div class="city-details">
                         <p><strong>Страна:</strong> {{ city.country }}</p>
                         <p><strong>Язык:</strong> {{ city.language }}</p>
@@ -70,35 +60,7 @@
                         <p><strong>Лучший сезон:</strong> {{ city.best_season }}</p>
                         <p><strong>Климат:</strong> {{ city.climate }}</p>
                     </div>
-                    {% endif %}
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Секция "Достопримечательности" -->
-    <section id="attractions" class="section attractions-section">
-        <div class="container">
-            <h2 class="section-title">Достопримечательности</h2>
-            <div class="attractions-grid">
-                {% for attraction in city.attractions %}
-                <div class="attraction-card">
-                    <div class="attraction-image">
-                        <!-- 🔧 Если есть изображения для достопримечательностей, добавьте их в static/img -->
-                        <img src="{{ url_for('static', filename='img/placeholder.jpg') }}" alt="{{ attraction.name }}">
-                    </div>
-                    <div class="attraction-info">
-                        <h3>{{ attraction.name }}</h3>
-                        <p>{{ attraction.description }}</p>
-                        {% if attraction.price %}
-                        <div class="attraction-details">
-                            <span>💰 {{ attraction.price }}</span>
-                            <span>⏱️ {{ attraction.duration }}</span>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
             </div>
         </div>
     </section>
@@ -135,22 +97,7 @@
     </section>
     {% endif %}
 
-    <!-- Секция "Галерея" -->
-    <section id="gallery" class="section gallery-section">
-        <div class="container">
-            <h2 class="section-title">Галерея</h2>
-            <div class="gallery-grid">
-                {% for image in city.images %}
-                <div class="gallery-item">
-                    <img src="{{ url_for('static', filename='img/' + image) }}" alt="Фото {{ city.city_name }}">
-                </div>
-                {% endfor %}
-                <!-- 🔧 Добавьте больше изображений в папку static/img/ -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Секция "Советы путешественникам" -->
+    <!-- Секция "Советы" -->
     <section id="tips" class="section tips-section">
         <div class="container">
             <h2 class="section-title">Советы путешественникам</h2>
@@ -165,6 +112,20 @@
         </div>
     </section>
 
+    <!-- Призыв к действию -->
+    <section class="section cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Готовы исследовать {{ city.city_name }}?</h2>
+                <p>Посмотрите достопримечательности и галерею города</p>
+                <div class="cta-buttons">
+                    <a href="/attractions" class="btn-primary">Достопримечательности</a>
+                    <a href="/gallery" class="btn-secondary">Галерея</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Футер -->
     <footer class="footer">
         <div class="container">
@@ -174,12 +135,7 @@
     </footer>
 
     <script>
-        // 🔧 Добавьте JavaScript для:
-        // - Плавной прокрутки к секциям
-        // - Анимации при скролле
-        // - Галереи с модальным окном
-        
-        // Простая плавная прокрутка
+        // Плавная прокрутка
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -191,28 +147,6 @@
                     });
                 }
             });
-        });
-        
-        // Анимация появления при скролле
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('.section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(30px)';
-            section.style.transition = 'all 0.6s ease-out';
-            observer.observe(section);
         });
     </script>
 </body>

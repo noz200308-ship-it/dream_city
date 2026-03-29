@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ city.city_name }} — Галерея</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">{{ city.city_name }}</div>
+            <ul class="nav-menu">
+                <li><a href="/">Главная</a></li>
+                <li><a href="/attractions">Достопримечательности</a></li>
+                <li><a href="/gallery" class="active">Галерея</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Галерея {{ city.city_name }}</h1>
+            <p>Фотографии города моей мечты</p>
+        </div>
+    </section>
+
+    <!-- Галерея -->
+    <section class="section gallery-page">
+        <div class="container">
+            <div class="gallery-grid-large">
+                {% for image in images %}
+                <div class="gallery-card" onclick="openModal('{{ url_for('static', filename='img/' + image) }}')">
+                    <img src="{{ url_for('static', filename='img/' + image) }}" alt="Фото {{ city.city_name }}">
+                    <div class="gallery-overlay">
+                        <span class="view-icon">🔍</span>
+                        <p>Нажмите для увеличения</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            {% if images|length == 0 %}
+            <div class="no-images">
+                <p>📸 Изображения пока не добавлены</p>
+                <p>Пожалуйста, добавьте фотографии в папку <code>static/img/</code></p>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Модальное окно для просмотра изображений -->
+    <div id="imageModal" class="modal">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div class="modal-caption" id="modalCaption"></div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <p>{{ city.city_name }} — Город моей мечты</p>
+            <p class="footer-credit">Создано с ❤️ для проекта "Город мечты"</p>
+        </div>
+    </footer>
+
+    <script>
+        // Модальное окно для галереи
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = "block";
+            modalImg.src = imageSrc;
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = "none";
+        }
+        
+        // Закрытие по клику вне изображения
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        
+        // Закрытие по Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

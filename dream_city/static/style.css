@@ -1,9 +1,4 @@
-/* ==================== ОСНОВНЫЕ НАСТРОЙКИ ==================== */
-/* 🔧 ЧТО ИЗМЕНИТЬ:
-   - Замените цвета в :root под свой город мечты
-   - Настройте шрифты
-   - Адаптируйте под свой вкус
-*/
+
 
 :root {
     /* Основные цвета - 🔧 ИЗМЕНИТЕ ПОД СВОЙ ГОРОД */
@@ -425,6 +420,362 @@ body {
     .food-list,
     .gallery-grid,
     .tips-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==================== ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ 3 СТРАНИЦ ==================== */
+
+/* Активная ссылка в навигации */
+.nav-menu a.active {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+/* Заголовок страницы */
+.page-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    text-align: center;
+    padding: 60px 0;
+    margin-top: 70px;
+}
+
+.page-header h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.page-header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* Страница достопримечательностей */
+.attractions-page {
+    background: var(--bg-light);
+}
+
+.attractions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.attraction-item {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    transition: transform 0.3s ease;
+}
+
+.attraction-item:hover {
+    transform: translateY(-5px);
+}
+
+.attraction-image-large {
+    height: 100%;
+    overflow: hidden;
+}
+
+.attraction-image-large img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.attraction-item:hover .attraction-image-large img {
+    transform: scale(1.05);
+}
+
+.attraction-details-large {
+    padding: 30px;
+}
+
+.attraction-details-large h2 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+
+.attraction-description {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.attraction-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.info-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.info-icon {
+    font-size: 1.5rem;
+}
+
+.info-item strong {
+    display: block;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.info-item p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.btn-small {
+    display: inline-block;
+    padding: 10px 25px;
+    background: var(--accent-color);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.btn-small:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Карта */
+.map-section {
+    background: var(--white);
+}
+
+.map-placeholder {
+    background: var(--bg-light);
+    padding: 60px;
+    text-align: center;
+    border-radius: 15px;
+    border: 2px dashed var(--primary-color);
+}
+
+.map-placeholder p {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+/* Страница галереи */
+.gallery-page {
+    background: var(--bg-light);
+}
+
+.gallery-grid-large {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+}
+
+.gallery-card {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 1;
+}
+
+.gallery-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-card:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: var(--white);
+}
+
+.gallery-card:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.view-icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.gallery-overlay p {
+    font-size: 1rem;
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.95);
+    cursor: pointer;
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: contain;
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: var(--white);
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 2001;
+}
+
+.close-modal:hover {
+    color: var(--accent-color);
+}
+
+.modal-caption {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: var(--white);
+    font-size: 1rem;
+    padding: 10px;
+}
+
+/* Кнопка призыва к действию */
+.cta-section {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    text-align: center;
+}
+
+.cta-content h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.cta-content p {
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 12px 30px;
+    background: transparent;
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    border: 2px solid var(--white);
+}
+
+.btn-secondary:hover {
+    background: var(--white);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+/* Сообщение об отсутствии изображений */
+.no-images {
+    text-align: center;
+    padding: 60px;
+    background: var(--white);
+    border-radius: 15px;
+}
+
+.no-images code {
+    background: var(--bg-light);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-family: monospace;
+}
+
+/* Адаптивность для страниц */
+@media (max-width: 968px) {
+    .attraction-item {
+        grid-template-columns: 1fr;
+    }
+    
+    .attraction-image-large {
+        height: 300px;
+    }
+    
+    .gallery-grid-large {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    .page-header h1 {
+        font-size: 2rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-secondary, .btn-primary {
+        width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .attraction-details-large {
+        padding: 20px;
+    }
+    
+    .attraction-info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .gallery-grid-large {
         grid-template-columns: 1fr;
     }
 }
